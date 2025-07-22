@@ -1,0 +1,18 @@
+<!-- v1 -->
+<!-- <header class="bg-blue-600 text-white py-4 px-6 flex items-center justify-between" style="height: 10vh;"> -->
+
+  <!-- v2 -->
+<header class="px-6 py-4 flex items-center justify-between shadow-md bg-gradient-to-r from-orange-200 to-orange-100 rounded-b-2xl animate-fade-in" style="height: 10vh;">
+  <div class="flex items-center space-x-4">
+    <img src="/images/logo.png" alt="Logo" class="h-10 w-auto rounded-full shadow-sm" />
+    <span class="text-2xl font-semibold text-gray-800 tracking-wide">
+      CÔNG TY CỔ PHẦN CHỮ KÝ SỐ VI NA
+    </span>
+  </div>
+  <% if (typeof user !== 'undefined') { %>
+    <a href="/logout" class="text-lg text-gray-700 hover:text-red-500 transition-colors duration-200">
+      Đăng xuất
+    </a>
+  <% } %>
+</header>
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Công Ty CP Chữ Ký Số Vi Na</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 min-h-screen flex flex-col">
+
+  <%- include('partials/header') %>
+
+  <main class="flex-grow p-10">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4">Kiểm tra ký <%= type %></h1>
+      <form action="/thongke/<%= type.toLowerCase() %>" method="POST" class="space-y-4">
+        <input type="text" name="serialnumber" placeholder="Serial Number" class="w-full border px-3 py-2 rounded" required />
+        <input type="password" name="access_token" placeholder="Access Token" class="w-full border px-3 py-2 rounded" required />
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Kiểm tra</button>
+      </form>
+      <% if (result) { %>
+        <% if (result.error) { %>
+          <p class="text-red-500 mt-4"><%= result.error %></p>
+        <% } else { %>
+          <div class="mt-6 bg-gray-100 p-4 rounded">
+            <p><strong>Serial Number:</strong> <%= result.serialnumber %></p>
+            <% if (type === 'PDF') { %>
+              <p><strong>Số lượng PDF đăng ký:</strong> <%= result.expectedCount %></p>
+            <% } %>
+            <p><strong>Số lượng <%= type %> đã ký:</strong> <%= result.signedCount %></p>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
