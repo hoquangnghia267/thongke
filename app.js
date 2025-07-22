@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
+const statsByDateRouter = require('./routes/statsByDate');
 
 dotenv.config();
 
@@ -29,9 +30,8 @@ app.use(session({
 
 // Routes
 app.use('/', require('./routes/auth'));
-// app.use('/dashboard', require('./routes/dashboard'));
+app.use('/thongke/ngay', statsByDateRouter);
 app.use('/thongke', require('./routes/dashboard'));
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server started at http://localhost:${PORT}`));

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Công Ty CP Chữ Ký Số Vi Na</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col bg-gray-100">
+
+  <!-- Header -->
+  <%- include('../partials/header') %>
+
+  <!-- Main content -->
+  <main class="flex-grow p-6">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4 text-center">Thống kê theo ngày</h1>
+
+      <form method="POST" action="/thongke/ngay" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <input type="text" name="serialnumber" placeholder="Serial Number" class="border px-3 py-2 rounded" required />
+        <input type="password" name="access_token" placeholder="Access Token" class="border px-3 py-2 rounded" required />
+        <%
+          const today = new Date().toISOString().split('T')[0]; // yyyy-mm-dd
+        %>
+        <input type="date" name="from_date" class="border px-3 py-2 rounded" value="<%= typeof result !== 'undefined' && result?.fromDate ? result.fromDate : today %>" required />
+        <input type="date" name="to_date" class="border px-3 py-2 rounded" value="<%= typeof result !== 'undefined' && result?.toDate ? result.toDate : today %>" required />
+        
+
+        <div class="flex items-center space-x-4">
+          <label class="flex items-center space-x-2">
+            <input type="radio" name="type" value="PDF" class="form-radio" checked />
+            <span>PDF</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="radio" name="type" value="XML" class="form-radio" />
+            <span>XML</span>
+          </label>
+        </div>
+
+        <button type="submit" class="col-span-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Thống kê</button>
+      </form>
+
+      <% if (typeof result !== 'undefined') { %>
+        <% if (result && result.error) { %>
+          <div class="bg-red-100 text-red-700 p-4 rounded shadow">
+            <p><%= result.error %></p>
+          </div>
+        <% } else if (result) { %>
+          <div class="bg-green-100 p-4 rounded shadow">
+            <p><strong>Serial:</strong> <%= result.serialnumber %></p>
+            <p><strong>Loại:</strong> <%= result.type %></p>
+            <p><strong>Số lượng bản ghi:</strong> <%= result.count %></p>
+            <p><strong>Từ ngày:</strong> <%= result.fromDate %></p>
+            <p><strong>Đến ngày:</strong> <%= result.toDate %></p>
+          </div>
+        <% } else { %>
+          <div class="text-gray-500 text-center italic">
+            Không có kết quả để hiển thị.
+          </div>
+        <% } %>
+      <% } %>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+
+</body>
+</html>
