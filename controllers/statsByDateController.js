@@ -27,8 +27,9 @@ exports.handleSubmit = async (req, res) => {
     });
   }
 
-  const fromTimestamp = new Date(from_date).getTime();
-  const toTimestamp = new Date(to_date).getTime() + 86400000 - 1;
+  const GMT7_OFFSET = 7 * 60 * 60 * 1000;
+  const fromTimestamp = new Date(from_date).getTime() - GMT7_OFFSET;
+  const toTimestamp = new Date(to_date).getTime() - GMT7_OFFSET + 86400000 - 1;
 
   const count = await SignLog.countDocuments({
     serialnumber: serialnumber,

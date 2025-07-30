@@ -3,23 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <title>Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="/css/tailwind.min.css" rel="stylesheet">
   <link href="/styles.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
   <%- include('partials/header') %>
 
-  <main class="flex-grow p-10">
-     <div class="max-w-md mx-auto login-box shadow">
-      <h1 class="text-xl font-bold mb-4">Đăng nhập</h1>
+  <main class="flex-grow p-4 md:p-10">
+    <div class="max-w-md w-full mx-auto login-box shadow bg-white rounded-lg p-6 md:p-8">
+      <div class="flex flex-col items-center mb-4">
+        <img src="/images/logo.png" alt="Logo" class="h-16 w-auto mb-2" />
+        <div class="h-4"></div>
+        <h1 class="text-xl font-bold text-center">Đăng nhập</h1>
+      </div>
       <% if (error) { %>
-        <p class="text-red-500 mb-4"><%= error %></p>
+        <p class="text-red-500 mb-4 text-center"><%= error %></p>
       <% } %>
       <form method="POST" action="/login" class="space-y-4">
-        <input type="text" name="username" placeholder="Username" class="w-full border px-3 py-2 rounded" required />
-        <input type="password" name="password" placeholder="Password" class="w-full border px-3 py-2 rounded" required />
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
+        <input type="text" name="username" placeholder="Username" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+        <input type="password" name="password" placeholder="Password" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">Login</button>
       </form>
     </div>
   </main>

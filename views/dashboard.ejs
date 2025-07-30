@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Công Ty CP Chữ Ký Số Vi Na</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="/css/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-green-50 min-h-screen flex flex-col">
 
@@ -13,20 +13,50 @@
     <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
       <h1 class="text-2xl font-bold mb-4">Kiểm tra ký <%= type %></h1>
       <form action="/thongke/<%= type.toLowerCase() %>" method="POST" class="space-y-4">
-        <input type="text" name="serialnumber" placeholder="Serial Number" class="w-full border px-3 py-2 rounded" required />
-        <input type="password" name="access_token" placeholder="Access Token" class="w-full border px-3 py-2 rounded" required />
+        <label class="block">
+          <span class="text-gray-700">Serial Number</span>
+          <input type="text" name="serialnumber" placeholder="Serial Number" class="w-full border px-3 py-2 rounded" required />
+        </label>
+        <label class="block">
+          <span class="text-gray-700">Access Token</span>
+          <input type="password" name="access_token" placeholder="Access Token" class="w-full border px-3 py-2 rounded" required autocomplete="off" />
+        </label>
         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Kiểm tra</button>
       </form>
       <% if (result) { %>
         <% if (result.error) { %>
-          <p class="text-red-500 mt-4"><%= result.error %></p>
+          <div class="bg-red-100 text-red-700 p-4 rounded shadow mt-4 flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="white"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01" />
+            </svg>
+            <span><%= result.error %></span>
+          </div>
         <% } else { %>
-          <div class="mt-6 bg-gray-100 p-4 rounded">
-            <p><strong>Serial Number:</strong> <%= result.serialnumber %></p>
-            <% if (type === 'PDF') { %>
-              <p><strong>Số lượng PDF đăng ký:</strong> <%= result.expectedCount %></p>
-            <% } %>
-            <p><strong>Số lượng <%= type %> đã ký:</strong> <%= result.signedCount %></p>
+          <div class="mt-6 bg-gradient-to-br from-green-100 to-green-200 p-8 rounded-2xl shadow-2xl w-full">
+            <div class="flex items-center mb-4">
+              <svg class="w-10 h-10 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="white"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4" />
+              </svg>
+              <h2 class="text-xl font-bold text-green-700 ml-3">Kết quả kiểm tra</h2>
+            </div>
+            <div class="space-y-3 text-gray-700">
+              <div class="flex flex-col md:flex-row md:items-center">
+                <span class="font-semibold md:w-48">Serial Number:</span>
+                <span class="break-words font-bold truncate md:flex-1"><%= result.serialnumber %></span>
+              </div>
+              <% if (type === 'PDF') { %>
+                <div class="flex flex-col md:flex-row md:items-center">
+                  <span class="font-semibold md:w-48">Số lượng PDF đăng ký:</span>
+                  <span class="text-blue-700 font-bold text-2xl break-words truncate md:flex-1"><%= result.expectedCount %></span>
+                </div>
+              <% } %>
+              <div class="flex flex-col md:flex-row md:items-center">
+                <span class="font-semibold md:w-48">Số lượng <%= type %> đã ký:</span>
+                <span class="text-green-700 font-bold text-3xl break-words truncate md:flex-1"><%= result.signedCount %></span>
+              </div>
+            </div>
           </div>
         <% } %>
       <% } %>

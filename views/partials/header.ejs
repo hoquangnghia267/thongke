@@ -41,11 +41,11 @@
 
 <style>
   :root {
-    --primary-color: #f97316; /* Màu cam chính, bạn có thể thay đổi mã hex */
-    --secondary-color: #fed7aa; /* Màu cam nhạt cho gradient, bạn có thể thay đổi */
+    --primary-color: #ff9e43; /* Màu cam chính, bạn có thể thay đổi mã hex */
+    --secondary-color: #ff9e43; /* Màu cam nhạt cho gradient, bạn có thể thay đổi */
     --text-color: #1f2937; /* Màu chữ chính (xám đậm) */
-    --hover-color: #ea580c; /* Màu khi hover link */
-    --active-color: #c2410c; /* Màu cho link đang active (như Theo ngày) */
+    --hover-color: #ff9e43; /* Màu khi hover link */
+    --active-color: #ff9e43; /* Màu cho link đang active (như Theo ngày) */
   }
 
   header {
@@ -58,7 +58,7 @@
   }
 
   .logo-svg:hover {
-    transform: rotate(90deg) scale(1.1);
+    transform: rotate(360deg) scale(1.1);
   }
 
   nav a:hover {
@@ -96,7 +96,7 @@
       <nav class="hidden md:flex space-x-6 text-base font-medium">
         <a href="/thongke/pdf" class="hover:[var(--hover-color)] transition-colors duration-200">PDF</a>
         <a href="/thongke/xml" class="hover:[var(--hover-color)] transition-colors duration-200">XML</a>
-        <a href="/thongke/ngay" class="active-link hover:[var(--hover-color)] transition-colors duration-200">Theo ngày</a>
+        <a href="/thongke/ngay" class="hover:[var(--hover-color)] transition-colors duration-200">Theo ngày</a>
       </nav>
       <a href="/logout" class="text-lg font-medium hover:text-red-500 transition-colors duration-200">Đăng xuất</a>
 
@@ -113,7 +113,7 @@
       <nav class="flex flex-col items-center py-4 space-y-4 text-base font-medium">
         <a href="/thongke/pdf" class="hover:[var(--hover-color)] transition-colors duration-200">PDF</a>
         <a href="/thongke/xml" class="hover:[var(--hover-color)] transition-colors duration-200">XML</a>
-        <a href="/thongke/ngay" class="active-link hover:[var(--hover-color)] transition-colors duration-200">Theo ngày</a>
+        <a href="/thongke/ngay" class="hover:[var(--hover-color)] transition-colors duration-200">Theo ngày</a>
         <a href="/logout" class="text-lg font-medium hover:text-red-500 transition-colors duration-200">Đăng xuất</a>
       </nav>
     </div>
@@ -129,4 +129,5 @@
 </script>
 
 <!-- Tailwind CSS CDN -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="/css/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
