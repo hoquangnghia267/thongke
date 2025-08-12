@@ -5,13 +5,13 @@
   <title>Công Ty CP Chữ Ký Số Vi Na</title>
   <link href="/css/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-green-50 min-h-screen flex flex-col">
-
+<body class="min-h-screen flex flex-col bg-gray-100"> 
   <%- include('partials/header') %>
-
+  <%- include('partials/sidebar') %>
+  
   <main class="flex-grow p-10">
     <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-      <h1 class="text-2xl font-bold mb-4">Kiểm tra ký <%= type %></h1>
+      <h1 class="text-2xl font-bold mb-4">Số lượng ký <%= type %></h1>
       <form action="/thongke/<%= type.toLowerCase() %>" method="POST" class="space-y-4">
         <label class="block">
           <span class="text-gray-700">Serial Number</span>

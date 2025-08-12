@@ -31,6 +31,9 @@ app.use(session({
 // Routes
 app.use('/', require('./routes/auth'));
 app.use('/thongke/ngay', statsByDateRouter);
+
+app.use('/thongke/thang', require('./routes/statsByMonth'));
+
 app.use('/thongke', require('./routes/dashboard'));
 
 const PORT = process.env.PORT || 3000;

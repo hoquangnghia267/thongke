@@ -11,6 +11,9 @@
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
+    "chart": "^0.1.2",
+    "chart.js": "^4.5.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "connect-mongo": "^5.1.0",
     "dotenv": "^17.2.0",
     "ejs": "^3.1.10",

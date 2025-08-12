@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thống kê số lượng ký mỗi ngày trong tháng</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="/js/chart.js"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-100">
+  <!-- Header -->
+  <%- include('../partials/header') %>
+  <%- include('../partials/sidebar') %>
+  <!-- Main content -->
+  <main class="flex-grow p-6">
+    <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+      <h1 class="text-2xl font-bold mb-6 text-center text-orange-600">Thống kê số lượng ký mỗi ngày trong tháng</h1>
+
+      <form method="POST" action="/thongke/thang" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <input type="text" name="serialnumber" placeholder="Serial Number" class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500" required />
+        <input type="password" name="access_token" placeholder="Access Token" class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500" required />
+        <select name="month" class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+          <% for(let m=1; m<=12; m++) { %>
+            <option value="<%= m %>"><%= m %></option>
+          <% } %>
+        </select>
+        <input type="number" name="year" min="2000" max="2100" value="<%= new Date().getFullYear() %>" placeholder="Năm" class="border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500" required />
+        <div class="flex items-center space-x-4 md:col-span-2">
+          <label class="flex items-center space-x-2">
+            <input type="radio" name="type" value="PDF" class="form-radio text-orange-500" checked />
+            <span>PDF</span>
+          </label>
+          <label class="flex items-center space-x-2">
+            <input type="radio" name="type" value="XML" class="form-radio text-orange-500" />
+            <span>XML</span>
+          </label>
+        </div>
+        <button type="submit" class="col-span-full bg-blue-500 text-white py-2 rounded hover:bg-orange-600 transition-colors">Thống kê</button>
+      </form>
+
+      <% if (typeof result !== 'undefined') { %>
+        <% if (result && result.error) { %>
+          <div class="bg-red-100 text-red-700 p-4 rounded shadow">
+            <p><%= result.error %></p>
+          </div>
+        <% } else if (result && Array.isArray(result.stats) && result.stats.length > 0) { %>
+          <div class="w-full max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <canvas id="signChart" height="450" data-stats='<%- JSON.stringify(result.stats) %>' data-month="<%= result.month || 'N/A' %>" data-year="<%= result.year || 'N/A' %>"></canvas>
+            <div id="chartError" class="text-red-500 text-center mt-4 hidden">Không thể hiển thị biểu đồ do lỗi dữ liệu.</div>
+          </div>
+        <% } else { %>
+          <div class="text-gray-500 text-center italic">Không có kết quả để hiển thị hoặc dữ liệu không hợp lệ.</div>
+        <% } %>
+      <% } %>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+</body>
+</html>
