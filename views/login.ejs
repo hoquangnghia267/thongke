@@ -1,33 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    }
+    .login-box {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .login-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    button[type="submit"] {
+      background: linear-gradient(90deg, #1976d2, #42a5f5);
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #1565c0, #1976d2);
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
+  <!-- Header -->
   <%- include('partials/header') %>
 
-  <main class="flex-grow p-4 md:p-10">
-    <div class="max-w-md w-full mx-auto login-box shadow bg-white rounded-lg p-6 md:p-8">
-      <div class="flex flex-col items-center mb-4">
-        <img src="/images/logo.png" alt="Logo" class="h-16 w-auto mb-2" />
-        <div class="h-4"></div>
-        <h1 class="text-xl font-bold text-center">Đăng nhập</h1>
+  <main class="flex-grow flex items-center justify-center p-4 md:p-10">
+    <div class="max-w-md w-full login-box bg-white rounded-xl shadow-lg p-6 md:p-8 animate__animated animate__fadeInUp">
+      
+      <!-- Logo + Title -->
+      <div class="flex flex-col items-center mb-6">
+        <div class="bg-white p-3">
+          <img src="/images/logo.png" alt="Logo" class="h-14 w-auto object-contain" />
+        </div>
+        <h1 class="text-2xl font-bold text-center mt-4 text-[#0d47a1]">Đăng nhập</h1>
       </div>
+
+      <!-- Error message -->
       <% if (error) { %>
         <p class="text-red-500 mb-4 text-center"><%= error %></p>
       <% } %>
+
+      <!-- Login Form -->
       <form method="POST" action="/login" class="space-y-4">
-        <input type="text" name="username" placeholder="Username" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-        <input type="password" name="password" placeholder="Password" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">Login</button>
+        <input type="text" name="username" placeholder="Tên đăng nhập"
+          class="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required />
+        <input type="password" name="password" placeholder="Mật khẩu"
+          class="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required />
+        <button type="submit"
+          class="w-full text-white py-2 rounded-lg font-semibold tracking-wide shadow-md transition">
+          Đăng nhập
+        </button>
       </form>
     </div>
   </main>
 
+  <!-- Footer -->
   <%- include('partials/footer') %>
 </body>
 </html>

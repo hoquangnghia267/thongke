@@ -1,51 +1,54 @@
 <div class="sidebar">
-
-    <h2>Thống kê ký API</h2>
+    <h2>📊 Thống kê ký API</h2>
     <ul>
         <li>
-            <a href="#">Tổng số lượng</a>
+            <a href="#">📂 Tổng số lượng</a>
             <ul>
-                <li><a href="/thongke/pdf" class="hover:[var(--hover-color)] transition-colors duration-200">PDF</a></li>
-                <li><a href="/thongke/xml" class="hover:[var(--hover-color)] transition-colors duration-200">XML</a></li>
+                <li><a href="/thongke/pdf">📄 PDF</a></li>
+                <li><a href="/thongke/xml">🗂️ XML</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">Thống kê</a>
+            <a href="#">📈 Thống kê</a>
             <ul>
-                <li><a href="/thongke/ngay" class="hover:[var(--hover-color)] transition-colors duration-200">Theo ngày</a></li>
-                <li><a href="/thongke/thang" class="hover:[var(--hover-color)] transition-colors duration-200">Theo tháng</a></li>
-                <!-- <li><a href="/thongke/nam" class="hover:[var(--hover-color)] transition-colors duration-200">Theo năm</a></li> -->
+                <li><a href="/thongke/ngay">📅 Theo ngày</a></li>
+                <li><a href="/thongke/thang">🗓️ Theo tháng</a></li>
+                <li><a href="/thongke/nam">📆 Theo năm</a></li>
             </ul>
         </li>
     </ul>
 </div>
 
-        
 <style>
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
     }
 
     .sidebar {
-        width: 250px;
-        height: calc(100vh - 60px); /* Trừ chiều cao header */
-        background: #c3e3f7;
-        color: rgb(0, 0, 0);
+        width: 260px;
+        height: calc(100vh - 60px);
+        background: linear-gradient(180deg, #e3f2fd, #bbdefb);
+        color: #222;
         position: fixed;
-        top: 80px; /* Bắt đầu từ dưới header */
+        top: 80px;
         left: 0;
-        padding: 20px;
+        padding: 25px 20px;
+        box-shadow: 3px 0 8px rgba(0, 0, 0, 0.1);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
         transition: transform 0.3s ease;
-        z-index: 900; /* Thấp hơn header nếu cần */
+        z-index: 900;
     }
 
     .sidebar h2 {
-        margin-bottom: 20px;
-        font-size: 24px;
+        margin-bottom: 25px;
+        font-size: 22px;
         text-align: center;
+        font-weight: 600;
+        color: #0d47a1;
     }
 
     .sidebar ul {
@@ -53,38 +56,56 @@
     }
 
     .sidebar ul li {
-        margin: 15px 0;
+        margin: 12px 0;
     }
 
     .sidebar ul li a {
-        color: rgb(0, 0, 0);
+        color: #0d47a1;
         text-decoration: none;
         display: block;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background 0.3s;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
 
     .sidebar ul li a:hover {
-        background: #3498db;
+        background: #1976d2;
+        color: #fff;
+        transform: translateX(4px);
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
     }
 
     .sidebar ul ul {
         padding-left: 20px;
         display: none;
+        margin-top: 5px;
     }
 
     .sidebar ul li:hover > ul {
         display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    /* Hiệu ứng submenu xuất hiện */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     /* Responsive */
     @media (max-width: 768px) {
         .sidebar {
-            width: 200px;
+            width: 220px;
             transform: translateX(-100%);
         }
-
         .sidebar.active {
             transform: translateX(0);
         }
@@ -93,14 +114,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Toggle sidebar cho thiết bị di động (có thể thêm button toggle sau)
         const sidebar = document.querySelector('.sidebar');
-        // Ví dụ: Nếu cần toggle button
-        // const toggleBtn = document.createElement('button');
-        // toggleBtn.textContent = 'Toggle Menu';
-        // document.body.prepend(toggleBtn);
-        // toggleBtn.addEventListener('click', () => {
-        //     sidebar.classList.toggle('active');
-        // });
+        // Nếu sau này bạn muốn toggle sidebar cho mobile, có thể thêm nút ở đây
     });
 </script>

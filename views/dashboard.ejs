@@ -1,31 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <title>Công Ty CP Chữ Ký Số Vi Na</title>
   <link href="/css/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    }
+    .form-box {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+    input, button {
+      transition: all 0.2s ease-in-out;
+    }
+    input:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.3);
+    }
+    button {
+      background: linear-gradient(90deg, #1976d2, #42a5f5);
+    }
+    button:hover {
+      background: linear-gradient(90deg, #1565c0, #1976d2);
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col bg-gray-100"> 
+<body class="min-h-screen flex flex-col"> 
+
+  <!-- Header -->
   <%- include('partials/header') %>
+  <!-- Sidebar -->
   <%- include('partials/sidebar') %>
   
-  <main class="flex-grow p-10">
-    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-      <h1 class="text-2xl font-bold mb-4">Số lượng ký <%= type %></h1>
+  <main class="flex-grow p-6 md:p-10 md:ml-64 mt-20"> 
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-lg form-box">
+      
+      <!-- Tiêu đề -->
+      <h1 class="text-2xl font-bold mb-6 text-[#0d47a1]">Số lượng ký <%= type %></h1>
+      
+      <!-- Form -->
       <form action="/thongke/<%= type.toLowerCase() %>" method="POST" class="space-y-4">
         <label class="block">
-          <span class="text-gray-700">Serial Number</span>
-          <input type="text" name="serialnumber" placeholder="Serial Number" class="w-full border px-3 py-2 rounded" required />
+          <span class="text-gray-700 font-medium">Serial Number</span>
+          <input type="text" name="serialnumber" placeholder="Serial Number" 
+            class="w-full border px-3 py-2 rounded-lg focus:outline-none" required />
         </label>
         <label class="block">
-          <span class="text-gray-700">Access Token</span>
-          <input type="password" name="access_token" placeholder="Access Token" class="w-full border px-3 py-2 rounded" required autocomplete="off" />
+          <span class="text-gray-700 font-medium">Access Token</span>
+          <input type="password" name="access_token" placeholder="Access Token"
+            class="w-full border px-3 py-2 rounded-lg focus:outline-none" required autocomplete="off" />
         </label>
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Kiểm tra</button>
+        <button type="submit"
+          class="text-white px-4 py-2 rounded-lg font-semibold tracking-wide shadow-md w-full">
+          Kiểm tra
+        </button>
       </form>
+
+      <!-- Kết quả -->
       <% if (result) { %>
         <% if (result.error) { %>
-          <div class="bg-red-100 text-red-700 p-4 rounded shadow mt-4 flex items-center">
+          <div class="bg-red-100 text-red-700 p-4 rounded shadow mt-6 flex items-center animate__animated animate__shakeX">
             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="white"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01" />
@@ -33,8 +73,8 @@
             <span><%= result.error %></span>
           </div>
         <% } else { %>
-          <div class="mt-6 bg-gradient-to-br from-green-100 to-green-200 p-8 rounded-2xl shadow-2xl w-full">
-            <div class="flex items-center mb-4">
+          <div class="mt-6 bg-gradient-to-br from-green-100 to-green-200 p-8 rounded-2xl shadow-2xl w-full animate__animated animate__fadeInUp">
+            <div class="flex items-center mb-6">
               <svg class="w-10 h-10 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="white"/>
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12l2 2 4-4" />
@@ -44,17 +84,17 @@
             <div class="space-y-3 text-gray-700">
               <div class="flex flex-col md:flex-row md:items-center">
                 <span class="font-semibold md:w-48">Serial Number:</span>
-                <span class="break-words font-bold truncate md:flex-1"><%= result.serialnumber %></span>
+                <span class="break-words font-bold md:flex-1"><%= result.serialnumber %></span>
               </div>
               <% if (type === 'PDF') { %>
                 <div class="flex flex-col md:flex-row md:items-center">
                   <span class="font-semibold md:w-48">Số lượng PDF đăng ký:</span>
-                  <span class="text-blue-700 font-bold text-2xl break-words truncate md:flex-1"><%= result.expectedCount %></span>
+                  <span class="text-blue-700 font-bold text-2xl md:flex-1"><%= result.expectedCount %></span>
                 </div>
               <% } %>
               <div class="flex flex-col md:flex-row md:items-center">
                 <span class="font-semibold md:w-48">Số lượng <%= type %> đã ký:</span>
-                <span class="text-green-700 font-bold text-3xl break-words truncate md:flex-1"><%= result.signedCount %></span>
+                <span class="text-green-700 font-bold text-3xl md:flex-1"><%= result.signedCount %></span>
               </div>
             </div>
           </div>
@@ -63,6 +103,7 @@
     </div>
   </main>
 
+  <!-- Footer -->
   <%- include('partials/footer') %>
 </body>
 </html>

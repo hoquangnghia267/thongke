@@ -33,11 +33,13 @@ app.use('/', require('./routes/auth'));
 app.use('/thongke/ngay', statsByDateRouter);
 
 app.use('/thongke/thang', require('./routes/statsByMonth'));
+app.use('/thongke/nam', require('./routes/statsByYear'));
+
 
 app.use('/thongke', require('./routes/dashboard'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server started at http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server started at http://10.0.0.26:${PORT}`));
 
 app.get('/', (req, res) => {
   res.redirect('/login');

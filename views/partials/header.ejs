@@ -1,73 +1,100 @@
 <style>
   :root {
-    --primary-color: #ff9e43; /* Màu cam chính */
-    --secondary-color: #ff9e43; /* Màu cam nhạt cho gradient */
-    --text-color: #1f2937; /* Màu chữ chính (xám đậm) */
-    --hover-color: #ff9e43; /* Màu khi hover link */
-    --active-color: #ff9e43; /* Màu cho link đang active */
+    --primary-color: #FFA500; /* Xanh đậm */
+    --secondary-color: #FFA500; /* Xanh nhạt */
+    --accent-color: #ff9e43; /* Cam nhấn */
+    --text-color: #1f2937; /* Xám đậm */
+    --hover-color: #1565c0; /* Xanh hover */
+    --active-color: #0d47a1; /* Xanh active */
   }
 
   header {
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     transition: all 0.3s ease-in-out;
-    z-index: 1000; /* Đảm bảo header ở trên sidebar */
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
 
-  .logo-svg {
+  .logo-wrapper {
+    background: white;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     transition: transform 0.3s ease;
   }
 
-  .logo-svg:hover {
-    transform: rotate(360deg) scale(1.1);
+  .logo-wrapper:hover {
+    transform: rotate(-10deg) scale(1.05);
+  }
+
+  nav a {
+    position: relative;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    color: white;
   }
 
   nav a:hover {
-    color: var(--hover-color);
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--accent-color);
   }
 
   .active-link {
-    color: var(--active-color);
     font-weight: 600;
+    color: var(--accent-color);
   }
 
   #mobile-menu {
     background: var(--secondary-color);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
 </style>
 
-<header class="px-6 py-4 flex items-center justify-between shadow-lg text-[var(--text-color)] animate-fade-in">
-  <!-- Logo and Company Name -->
+<header class="px-6 py-3 flex items-center justify-between shadow-md text-[var(--text-color)] animate__animated animate__fadeInDown">
+  <!-- Logo + Company Name -->
   <div class="flex items-center space-x-4">
-    <img src="/images/logo1.png" alt="Logo" class="h-12 w-auto logo-svg" />
-    <span class="text-xl md:text-2xl font-bold tracking-tight">
+    <div class="logo-wrapper">
+      <img src="/images/logo1.png" alt="Logo" class="h-10 w-10 logo-svg" />
+    </div>
+    <span class="text-lg md:text-xl font-bold tracking-tight text-white drop-shadow-md">
       CÔNG TY CỔ PHẦN CHỮ KÝ SỐ VI NA (SmartSign)
     </span>
   </div>
 
-  <!-- Navigation and User Actions -->
+  <!-- Navigation + User -->
   <% if (typeof user !== 'undefined') { %>
     <div class="flex items-center space-x-6">
+      <a href="/logout" class="text-white text-base md:text-lg font-medium transition-colors duration-200">
+        Đăng xuất
+      </a>
 
-      <a href="/logout" class="text-lg font-medium hover:text-red-500 transition-colors duration-200">Đăng xuất</a>
-
-      <!-- Hamburger Menu for Mobile -->
-      <button id="menu-toggle" class="md:hidden text-[var(--text-color)] focus:outline-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      <!-- Hamburger -->
+      <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"></path>
         </svg>
       </button>
     </div>
 
-    <!-- Mobile Menu (Hidden by default) -->
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden w-full absolute top-16 left-0 shadow-lg">
-      <nav class="flex flex-col items-center py-4 space-y-4 text-base font-medium">
-        <a href="/logout" class="text-lg font-medium hover:text-red-500 transition-colors duration-200">Đăng xuất</a>
+      <nav class="flex flex-col items-center py-4 space-y-4 text-base font-medium text-white">
+        <a href="/logout" class="hover:text-[var(--accent-color)]">Đăng xuất</a>
       </nav>
     </div>
   <% } %>
 </header>
 
-<!-- JavaScript for Hamburger Menu Toggle -->
+<!-- JS Toggle -->
 <script>
   document.getElementById('menu-toggle')?.addEventListener('click', () => {
     const mobileMenu = document.getElementById('mobile-menu');
@@ -75,6 +102,6 @@
   });
 </script>
 
-<!-- Tailwind CSS CDN -->
+<!-- Tailwind + Animate -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
