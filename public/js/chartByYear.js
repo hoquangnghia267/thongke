@@ -6,13 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const year = canvas.getAttribute('data-year') || 'N/A';
   const ctx = canvas.getContext('2d');
 
+  // Đăng ký plugin ChartDataLabels
+  Chart.register(ChartDataLabels);
+
+  // Tìm 3 giá trị lớn nhất
+  const sortedCounts = [...stats.map(item => item.count)].sort((a, b) => b - a);
+  const top3Threshold = sortedCounts[2] || 0; // Giá trị nhỏ nhất trong top 3 (hoặc 0 nếu không đủ 3 giá trị)
+
   try {
     new Chart(ctx, {
       type: 'bar',
       data: {
         labels: stats.map(item => `Tháng ${item.month}`),
         datasets: [{
-          label: `Số lượng ký trong năm ${year}`,
+          label: `BIỂU ĐỒ THỐNG KÊ SỐ LƯỢNG KÝ TRONG NĂM ${year}`,
           data: stats.map(item => item.count),
           backgroundColor: 'rgba(249, 115, 22, 0.6)',
           borderColor: 'rgba(249, 115, 22, 1)',
@@ -30,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return Number(value).toLocaleString();
               }
             },
-            title: { display: true, text: 'Số lượng ký' }
+            title: { display: true, text: 'SỐ LƯỢNG KÝ' }
           },
           x: {
-            title: { display: true, text: 'Tháng' }
+            title: { display: true, text: 'THÁNG' }
           }
         },
         plugins: {
@@ -42,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             align: 'top',
             formatter: value => value.toLocaleString(),
             display: function(context) {
-              return context.dataset.data[context.dataIndex] > 0;
+              // Chỉ hiển thị nhãn nếu giá trị nằm trong top 3
+              return context.dataset.data[context.dataIndex] >= top3Threshold;
             }
           }
         },

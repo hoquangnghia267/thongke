@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         plugins: {
           legend: { display: true, position: 'top', labels: { font: { size: 16, weight: 'bold' } } },
-          title: { display: true, text: `Thống kê số lượng ký tháng ${month}/${year}`, font: { size: 18, weight: 'bold' } },
+          title: { display: true, text: `THỐNG KÊ SỐ LƯỢNG KÝ THÁNG ${month}/${year}`, font: { size: 18, weight: 'bold' } },
           datalabels: {
             display: context => top5Values.includes(context.dataset.data[context.dataIndex]),
             anchor: 'end',
