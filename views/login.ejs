@@ -1,69 +1,169 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập</title>
   <style>
     body {
-      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
     }
-    .login-box {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .login-container {
+      background-color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.5s ease-in-out;
     }
-    .login-box:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    button[type="submit"] {
-      background: linear-gradient(90deg, #1976d2, #42a5f5);
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #FF8C00, #FF8C00);
     }
-    button[type="submit"]:hover {
-      background: linear-gradient(90deg, #1565c0, #1976d2);
+    .logo {
+      max-width: 120px;
+      max-height: 120px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto 1.5rem;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.1);
+    }
+    h2 {
+      margin-bottom: 1.8rem;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: -0.02em;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #f9fafb;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+      outline: none;
+      background: #ffffff;
+    }
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(90deg, #007bff, #00c4ff);
+      border: none;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #0056b3, #0096cc);
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    }
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+    button:hover::after {
+      width: 200px;
+      height: 200px;
+    }
+    .error {
+      color: #e63946;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      background: #fff1f2;
+      padding: 0.5rem;
+      border-radius: 6px;
+    }
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5rem;
+        max-width: 90%;
+      }
+      .logo {
+        max-width: 100px;
+        max-height: 100px;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
-
-  <!-- Header -->
-  <%- include('partials/header') %>
-
-  <main class="flex-grow flex items-center justify-center p-4 md:p-10">
-    <div class="max-w-md w-full login-box bg-white rounded-xl shadow-lg p-6 md:p-8 animate__animated animate__fadeInUp">
-      
-      <!-- Logo + Title -->
-      <div class="flex flex-col items-center mb-6">
-        <div class="bg-white p-3">
-          <img src="/images/logo.png" alt="Logo" class="h-14 w-auto object-contain" />
-        </div>
-        <h1 class="text-2xl font-bold text-center mt-4 text-[#0d47a1]">Đăng nhập</h1>
+<body>
+  <div class="login-container">
+    <img src="https://smartsign.com.vn/images/logo.png" alt="Logo" class="logo">
+    <h2>Đăng nhập</h2>
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label for="username">Tên đăng nhập</label>
+        <input type="text" id="username" name="username" required>
       </div>
-
-      <!-- Error message -->
+      <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Đăng nhập</button>
       <% if (error) { %>
-        <p class="text-red-500 mb-4 text-center"><%= error %></p>
+        <p class="error"><%= error %></p>
       <% } %>
-
-      <!-- Login Form -->
-      <form method="POST" action="/login" class="space-y-4">
-        <input type="text" name="username" placeholder="Tên đăng nhập"
-          class="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          required />
-        <input type="password" name="password" placeholder="Mật khẩu"
-          class="w-full border px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          required />
-        <button type="submit"
-          class="w-full text-white py-2 rounded-lg font-semibold tracking-wide shadow-md transition">
-          Đăng nhập
-        </button>
-      </form>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <%- include('partials/footer') %>
+    </form>
+  </div>
 </body>
 </html>

@@ -7,59 +7,106 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
 
   // Đăng ký plugin ChartDataLabels
-  Chart.register(ChartDataLabels);
-
-  // Tìm 3 giá trị lớn nhất
-  const sortedCounts = [...stats.map(item => item.count)].sort((a, b) => b - a);
-  const top3Threshold = sortedCounts[2] || 0; // Giá trị nhỏ nhất trong top 3 (hoặc 0 nếu không đủ 3 giá trị)
+  if (typeof ChartDataLabels !== 'undefined') Chart.register(ChartDataLabels);
 
   try {
+    const values = stats.map(item => item.count);
+
+    // Tìm top 3
+    const sortedCounts = [...values].sort((a, b) => b - a);
+    const top3Threshold = sortedCounts[2] || 0;
+
+    // Gradient màu cam
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(249, 115, 22, 0.9)');
+    gradient.addColorStop(1, 'rgba(249, 168, 37, 0.6)');
+
+    // Đổi màu top 3
+    const barColors = values.map(v =>
+      v >= top3Threshold ? 'rgba(33, 150, 243, 0.85)' : gradient
+    );
+
     new Chart(ctx, {
       type: 'bar',
       data: {
         labels: stats.map(item => `Tháng ${item.month}`),
         datasets: [{
-          label: `BIỂU ĐỒ THỐNG KÊ SỐ LƯỢNG KÝ TRONG NĂM ${year}`,
-          data: stats.map(item => item.count),
-          backgroundColor: 'rgba(249, 115, 22, 0.6)',
-          borderColor: 'rgba(249, 115, 22, 1)',
-          borderWidth: 1
+          data: values,
+          backgroundColor: barColors,
+          borderColor: '#F97316',
+          borderWidth: 1,
+          borderRadius: 6,
+          barThickness: 32,
+          hoverBackgroundColor: 'rgba(33, 150, 243, 1)',
+          hoverBorderColor: '#1E88E5',
+          hoverBorderWidth: 2
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
         scales: {
           y: {
             beginAtZero: true,
-            max: Math.max(...stats.map(item => item.count)) * 1.1, // Add 10% padding above max value
+            max: Math.max(...values) * 1.1,
             ticks: {
-              stepSize: 20000, // Set tick interval to 20,000
-              callback: function(value) {
-                return Number(value).toLocaleString();
-              }
+              callback: value => Number(value).toLocaleString(),
+              font: { size: 13 }
             },
-            title: { display: true, text: 'SỐ LƯỢNG KÝ' }
+            title: { display: true, text: 'SỐ LƯỢNG KÝ', font: { size: 16, weight: 'bold' } },
+            grid: { color: 'rgba(0,0,0,0.05)' }
           },
           x: {
-            title: { display: true, text: 'THÁNG' }
+            title: { display: true, text: 'THÁNG', font: { size: 16, weight: 'bold' } },
+            ticks: { font: { size: 13 } },
+            grid: { display: false }
           }
         },
         plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: `📊 THỐNG KÊ SỐ LƯỢNG KÝ TRONG NĂM ${year}`,
+            font: { size: 20, weight: 'bold' },
+            padding: { top: 10, bottom: 30 }
+          },
+          tooltip: {
+            backgroundColor: '#333',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            callbacks: {
+              label: context => ` ${context.formattedValue}`
+            }
+          },
           datalabels: {
             anchor: 'end',
             align: 'top',
+            color: '#000',
+            font: { weight: 'bold', size: 12 },
             formatter: value => value.toLocaleString(),
-            display: function(context) {
-              // Chỉ hiển thị nhãn nếu giá trị nằm trong top 3
-              return context.dataset.data[context.dataIndex] >= top3Threshold;
-            }
+            display: context => context.dataset.data[context.dataIndex] >= top3Threshold
           }
         },
-        responsive: true,
-        maintainAspectRatio: false
+        animation: {
+          duration: 1200,
+          easing: 'easeOutQuart'
+        },
+        hover: {
+          mode: 'nearest',
+          animationDuration: 400
+        },
+        elements: {
+          bar: {
+            borderRadius: 6,
+            hoverBorderColor: '#1E88E5',
+            hoverBorderWidth: 2
+          }
+        }
       }
     });
   } catch (error) {
     console.error('Error rendering chart:', error);
-    document.getElementById('chartError').classList.remove('hidden');
+    document.getElementById('chartError')?.classList.remove('hidden');
   }
 });
